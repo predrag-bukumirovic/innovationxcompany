@@ -1,0 +1,159 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.open {
+  pointer-events: auto;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 9, 0.45);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  cursor: default;
+
+  .open & {
+    opacity: 1;
+  }
+}
+
+.sheet {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: min(1100px, calc(100vw - 20px));
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  padding: clamp(20px, 3vw, 36px);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  color: var(--ink);
+  transform: translate(-50%, calc(-100% - 24px));
+  transition: transform 0.55s var(--ease);
+
+  .open & {
+    transform: translate(-50%, 0);
+  }
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--ink);
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: clamp(22px, 3vw, 36px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+
+    &::placeholder {
+      color: rgba(15, 15, 14, 0.35);
+    }
+  }
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 14px;
+
+  span {
+    margin-right: 4px;
+    color: var(--muted);
+  }
+}
+
+.chip {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 14px;
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+
+  &:hover {
+    background: var(--ink);
+    color: var(--white);
+  }
+}
+
+.count {
+  margin: 28px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 12px;
+  }
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--tile);
+
+  img {
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 560;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.price {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.empty {
+  padding: 24px 0;
+  color: var(--muted);
+}

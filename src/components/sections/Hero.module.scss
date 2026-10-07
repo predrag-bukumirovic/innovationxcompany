@@ -1,0 +1,214 @@
+// Hero namerno ne pravi stacking context (bez isolation/transform), da fiksni header i paneli iz <Header /> ne bi ostali ispod narednih sekcija.
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: clamp(640px, calc(100svh - 2 * var(--gutter) - 40px), 960px);
+  margin: var(--gutter) var(--gutter) 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+
+  img {
+    object-fit: cover;
+    transform: scale(1.05);
+    transition: transform 8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+}
+
+.active {
+  opacity: 1;
+
+  img {
+    transform: scale(1);
+  }
+}
+
+// Broj kadrova raste sa širinom ekrana, da svaka fotografija zadrži portretni format.
+.frames {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  background: var(--ink);
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+
+  &:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+@media (min-width: 2000px) {
+  .frame:nth-child(3) {
+    display: block;
+  }
+}
+
+@media (min-width: 2700px) {
+  .frame:nth-child(4) {
+    display: block;
+  }
+}
+
+.single {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(10, 10, 9, 0.45) 0%, rgba(10, 10, 9, 0) 22%),
+    linear-gradient(0deg, rgba(10, 10, 9, 0.8) 0%, rgba(10, 10, 9, 0.45) 30%, rgba(10, 10, 9, 0) 60%);
+}
+
+.content {
+  --pad: clamp(20px, 3.4vw, 56px);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  width: 100%;
+  max-width: calc(var(--content-max) + 2 * var(--pad));
+  margin: 0 auto;
+  padding: 140px var(--pad) clamp(24px, 3.4vw, 52px);
+}
+
+.copy {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin-bottom: 24px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.aside {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  width: min(340px, 100%);
+}
+
+.lead {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  line-height: 1.5;
+  text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35);
+}
+
+.progress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.bar {
+  position: relative;
+  height: 28px;
+
+  &::before,
+  span {
+    position: absolute;
+    left: 0;
+    top: 13px;
+    height: 2px;
+  }
+
+  &::before {
+    content: "";
+    right: 0;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  span {
+    width: 0;
+    background: var(--white);
+  }
+}
+
+.barDone span {
+  width: 100%;
+}
+
+.barActive span {
+  animation: fill var(--slide-ms) linear forwards;
+}
+
+@keyframes fill {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .frames {
+    display: none;
+  }
+
+  .single {
+    display: block;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 28px;
+    padding-top: 120px;
+  }
+
+  .shade {
+    background:
+      linear-gradient(180deg, rgba(10, 10, 9, 0.45) 0%, rgba(10, 10, 9, 0) 20%),
+      linear-gradient(0deg, rgba(10, 10, 9, 0.88) 0%, rgba(10, 10, 9, 0.4) 45%, rgba(10, 10, 9, 0) 70%);
+  }
+
+  .aside {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .lead {
+    font-size: 15px;
+  }
+
+  .eyebrow {
+    margin-bottom: 16px;
+    font-size: 11px;
+    letter-spacing: 0.24em;
+  }
+}

@@ -1,0 +1,277 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+.sub {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+// Vidljiva tačka je 18px, a dugme 28px, da bi se lako pogodilo prstom.
+.swatches {
+  --ring-gap: var(--white);
+  display: flex;
+  margin-left: -5px;
+
+  button {
+    position: relative;
+    width: 28px;
+    height: 28px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border-radius: 50%;
+      background: var(--swatch);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+      transition: box-shadow 0.25s var(--ease);
+    }
+  }
+
+  .swatchActive::before {
+    box-shadow:
+      inset 0 0 0 1px rgba(0, 0, 0, 0.15),
+      0 0 0 2px var(--ring-gap),
+      0 0 0 3px var(--ink);
+  }
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--tile);
+
+  img {
+    object-fit: cover;
+    transition:
+      opacity 0.6s var(--ease),
+      transform 1.2s var(--ease);
+  }
+
+  .alt {
+    opacity: 0;
+  }
+
+  &:hover .alt {
+    opacity: 1;
+  }
+
+  &:hover img {
+    transform: scale(1.04);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--gold-light);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.quick {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--ink);
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.4s var(--ease);
+
+  &:hover {
+    background: var(--ink);
+    color: var(--white);
+    transform: scale(1.06);
+  }
+}
+
+.sizes {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--white);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.45s var(--ease);
+}
+
+.sizesOpen {
+  opacity: 1;
+  transform: none;
+}
+
+.sizesHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.sizeGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+
+  button {
+    height: 36px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    font-size: 13px;
+    font-weight: 500;
+    transition:
+      background-color 0.2s var(--ease),
+      color 0.2s var(--ease);
+
+    &:hover {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--white);
+    }
+  }
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.add {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover .addIcon {
+    background: var(--ink);
+    color: var(--white);
+    transform: rotate(90deg);
+  }
+}
+
+.addIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.4s var(--ease);
+}
+
+/* ---------- Tile varijanta ---------- */
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  .media {
+    border-radius: var(--radius-md);
+  }
+}
+
+.tileInfo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 2px;
+
+  .name {
+    font-size: 17px;
+  }
+}
+
+.tileMeta {
+  display: flex;
+  align-items: center;
+  margin-top: -8px;
+  padding: 0 2px;
+
+  .swatches {
+    --ring-gap: var(--paper);
+  }
+}
+
+@media (hover: none) {
+  .media .alt {
+    display: none;
+  }
+}
+
+// Na užim ekranima cena ide ispod naziva, da se dugi nazivi printova ne guraju sa cenom.
+@media (max-width: 1280px) {
+  .tileInfo {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tileInfo .name {
+    font-size: 15px;
+  }
+
+  .sizeGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

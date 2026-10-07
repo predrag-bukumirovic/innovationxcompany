@@ -1,0 +1,160 @@
+.section {
+  padding: clamp(56px, 7vw, 110px) 0 clamp(40px, 5vw, 72px);
+}
+
+.title {
+  padding: 0 var(--gutter);
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0;
+  margin: 30px auto clamp(32px, 4vw, 56px);
+  padding: 0 16px;
+  font-size: clamp(15px, 1.4vw, 19px);
+}
+
+.tabWrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.slash {
+  margin: 0 clamp(10px, 1.6vw, 22px);
+  color: rgba(15, 15, 14, 0.35);
+}
+
+.tab {
+  color: var(--muted);
+  transition: color 0.25s var(--ease);
+
+  sup {
+    margin-left: 2px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  &:hover {
+    color: var(--ink);
+  }
+}
+
+.tab {
+  position: relative;
+  padding: 10px 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+    height: 1.5px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s var(--ease);
+  }
+}
+
+.tabActive {
+  color: var(--ink);
+  font-weight: 600;
+
+  &::after {
+    transform: scaleX(1);
+  }
+}
+
+// Karusel ide celom širinom panela, a prva kartica je poravnata sa ivicom sadržaja.
+.scroller {
+  --edge: max(clamp(16px, 2.2vw, 32px), calc((100% - var(--content-max)) / 2));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  padding: 0 var(--edge);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(270px, 23.5vw, 350px);
+  gap: 12px;
+  width: max-content;
+
+  > * {
+    scroll-snap-align: start;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 760px;
+  margin: 40px auto 0;
+  padding: 0 var(--gutter);
+}
+
+.progress {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(15, 15, 14, 0.14);
+
+  span {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: width 0.3s var(--ease);
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+
+  :global(.round) {
+    border-color: rgba(15, 15, 14, 0.2);
+  }
+}
+
+@media (max-width: 640px) {
+  .track {
+    grid-auto-columns: 78vw;
+  }
+
+  // Na telefonu tabovi idu u jedan red koji se skroluje, bez kosih crta.
+  .tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 22px;
+    overflow-x: auto;
+    padding: 0 clamp(16px, 2.2vw, 32px);
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .tabWrap {
+    flex: none;
+  }
+
+  .slash {
+    display: none;
+  }
+}
